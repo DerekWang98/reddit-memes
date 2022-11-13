@@ -5,8 +5,8 @@ const getRedditJSON = async (subreddit: string): Promise<string[]> => {
   const url = `https://www.reddit.com/r/${subreddit}.json`;
   const response = await axios.get(url);
 
-  // Extract image url from reddit json
-  const imageURLs = response.data.data.children.map(dehydrateRedditJSON);
+  // Extract image url from reddit json and remove undefined values
+  const imageURLs = response.data.data.children.map(dehydrateRedditJSON).filter(Boolean);
   return imageURLs;
 };
 

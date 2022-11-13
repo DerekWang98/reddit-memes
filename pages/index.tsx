@@ -5,32 +5,25 @@ import Box from '@mui/material/Box';
 import Link from '../src/Link';
 import ProTip from '../src/ProTip';
 import Copyright from '../src/Copyright';
-import { useRedditJSON } from '../src/redditAPI/content';
-import Image from 'next/image';
-import { Backdrop, IconButton } from '@mui/material';
-import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+import SelectImage from '../src/components/SelectImage';
+import { Button, TextField } from '@mui/material';
 
 export default function Home() {
 
-  // React state to store the index of the current image
-  const [index, setIndex] = React.useState(0);
+  const [open, setOpen] = React.useState(false);
+  const [subreddit, setSubreddit] = React.useState('memes');
 
-  // Handler for the next and previous buttons
-  const handleNext = () => {
-    setIndex((prevIndex) => (prevIndex + 1));
+  const handleOpen = () => {
+    setOpen(true);
   };
 
-  const handlePrevious = () => {
-    setIndex((prevIndex) => (prevIndex - 1));
+  const handleClose = () => {
+    setOpen(false);
   };
 
-  // Get subreddit data from the api
-  const redditQuery = useRedditJSON('memes');
-
-  if (redditQuery.isLoading || !redditQuery.data) {
-    return <div>Loading...</div>;
-  }
+  const handleSubredditChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSubreddit(event.target.value);
+  };
 
   return (
     <Container maxWidth="lg">
@@ -49,23 +42,9 @@ export default function Home() {
         <Link href="/about" color="secondary">
           Go to the about page
         </Link>
-        <Backdrop
-          sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
-          open={true}
-        >
-          <IconButton aria-label="previous" onClick={handlePrevious}>
-            <ChevronLeftIcon />
-          </IconButton>
-            <Image
-              src={redditQuery.data[index]} // Route of the image file
-              height={500} // Desired size with correct aspect ratio
-              width={500} // Desired size with correct aspect ratio
-              alt="Your Name"
-            />
-          <IconButton aria-label="next" onClick={handleNext}>
-            <ChevronRightIcon />
-          </IconButton>
-        </Backdrop>
+        <TextField id="standard-basic" label="Subreddit" placeholder="E.g. ProgrammingHumor" variant="standard" onChange={handleSubredditChange} />
+        <Button onClick={handleOpen} variant='contained'>Show Images</Button>
+        <SelectImage open={open} handleClose={handleClose} subreddit={subreddit} />
         <ProTip />
         <Copyright />
       </Box>
