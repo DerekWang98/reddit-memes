@@ -5,7 +5,7 @@ import Box from '@mui/material/Box';
 import Link from '../src/Link';
 import ProTip from '../src/ProTip';
 import Copyright from '../src/Copyright';
-import SelectImage from '../src/components/SelectImage';
+import DisplayImage from '../src/components/DisplayImage';
 import { Button, TextField } from '@mui/material';
 
 export default function Home() {
@@ -13,8 +13,10 @@ export default function Home() {
   const [open, setOpen] = React.useState(false);
   const [subreddit, setSubreddit] = React.useState('memes');
 
-  const handleOpen = () => {
-    setOpen(true);
+  const handleOpen = (event: any) => {
+    event.stopPropagation(); // Stops the ClickAwayListener event from bubbling up the DOM tree, preventing any parent handlers from being notified of the event.
+
+    setOpen((prev) => !prev);
   };
 
   const handleClose = () => {
@@ -44,7 +46,7 @@ export default function Home() {
         </Link>
         <TextField id="standard-basic" label="Subreddit" placeholder="E.g. ProgrammingHumor" variant="standard" onChange={handleSubredditChange} />
         <Button onClick={handleOpen} variant='contained'>Show Images</Button>
-        <SelectImage open={open} handleClose={handleClose} subreddit={subreddit} />
+        <DisplayImage open={open} handleClose={handleClose} subreddit={subreddit} />
         <ProTip />
         <Copyright />
       </Box>
