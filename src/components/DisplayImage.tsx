@@ -53,7 +53,7 @@ export default function DisplayImage(props: Props) {
                 src={redditQuery.data[index]} // Route of the image file
                 width={1000} // Desired size with correct aspect ratio
                 height={1000} // Desired size with correct aspect ratio
-                style={{ objectFit: 'contain', maxInlineSize: '100%', blockSize: 'auto' }}
+                style={{ objectFit: 'contain', maxInlineSize: '100%', blockSize: 'auto', maxHeight: '90vh' }}
               />
             </Container>
             <IconButton aria-label="next" onClick={handleNext} size="large">
