@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { Backdrop, ClickAwayListener, Dialog, IconButton, Stack } from '@mui/material';
+import { Backdrop, Box, ClickAwayListener, Container, Dialog, IconButton, Stack } from '@mui/material';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import React from 'react';
@@ -46,12 +46,16 @@ export default function DisplayImage(props: Props) {
             <IconButton aria-label="previous" onClick={handlePrevious} size="large">
               <ChevronLeftIcon fontSize='large' />
             </IconButton>
-            <Image
-              src={redditQuery.data[index]} // Route of the image file
-              height={500} // Desired size with correct aspect ratio
-              width={500} // Desired size with correct aspect ratio
-              alt="Your Name"
-            />
+            <Container maxWidth="sm">
+              <Image
+                quality={100}
+                alt='Hello'
+                src={redditQuery.data[index]} // Route of the image file
+                width={1000} // Desired size with correct aspect ratio
+                height={1000} // Desired size with correct aspect ratio
+                style={{ objectFit: 'contain', maxInlineSize: '100%', blockSize: 'auto' }}
+              />
+            </Container>
             <IconButton aria-label="next" onClick={handleNext} size="large">
               <ChevronRightIcon fontSize='large' />
             </IconButton>
