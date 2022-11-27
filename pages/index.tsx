@@ -6,7 +6,8 @@ import Link from '../src/Link';
 import ProTip from '../src/ProTip';
 import Copyright from '../src/Copyright';
 import DisplayImage from '../src/components/DisplayImage';
-import { Button, TextField } from '@mui/material';
+import { Button, CircularProgress, TextField } from '@mui/material';
+import { useRedditJSON } from '../src/redditAPI/content';
 
 export default function Home() {
 
@@ -27,6 +28,9 @@ export default function Home() {
     setSubreddit(event.target.value);
   };
 
+  // Get subreddit data from the api
+  const redditQuery = useRedditJSON(subreddit);
+
   return (
     <Container maxWidth="lg">
       <Box
@@ -39,14 +43,23 @@ export default function Home() {
         }}
       >
         <Typography variant="h4" component="h1" gutterBottom>
-          MUI v5 + Next.js with TypeScript example
+          Reddit Memes
+        </Typography>
+        <Typography variant="subtitle1" component="h1" gutterBottom>
+          The easier way to consume reddit content.
         </Typography>
         <Link href="/about" color="secondary">
           Go to the about page
         </Link>
         <TextField id="standard-basic" label="Subreddit" placeholder="E.g. ProgrammingHumor" variant="standard" onChange={handleSubredditChange} />
-        <Button onClick={handleOpen} variant='contained'>Show Images</Button>
-        <DisplayImage open={open} handleClose={handleClose} subreddit={subreddit} />
+        {redditQuery.isLoading || !redditQuery.data ?
+          <CircularProgress /> : (
+            <>
+              <Button variant="contained" onClick={handleOpen}>Open</Button>
+              <DisplayImage open={open} handleClose={handleClose} data={redditQuery.data} />
+            </>
+          )
+        }
         <ProTip />
         <Copyright />
       </Box>
