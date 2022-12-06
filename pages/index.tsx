@@ -12,7 +12,7 @@ import { useRedditJSON } from '../src/redditAPI/content';
 export default function Home() {
 
   const [open, setOpen] = React.useState(false);
-  const [subreddit, setSubreddit] = React.useState('memes');
+  const [subreddit, setSubreddit] = React.useState('videos');
 
   const handleOpen = (event: any) => {
     event.stopPropagation(); // Stops the ClickAwayListener event from bubbling up the DOM tree, preventing any parent handlers from being notified of the event.
