@@ -11,6 +11,9 @@ const getRedditJSON = async (subreddit: string): Promise<string[]> => {
 };
 
 const dehydrateRedditJSON = (data: any) => {
+  if (data.data.media) {
+    return data.data.media.reddit_video.fallback_url;
+  }
   return data.data.url_overridden_by_dest
 }
 
