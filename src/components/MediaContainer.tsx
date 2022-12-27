@@ -3,7 +3,7 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import React from 'react';
 import VideoPlayer from './VideoPlayer';
-import ImageRender from './imageRender';
+import ImageRender from './ImageRender';
 
 interface Props {
   open: boolean;
