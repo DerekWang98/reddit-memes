@@ -1,9 +1,9 @@
-import Image from 'next/image';
 import { Backdrop, Box, ClickAwayListener, Container, IconButton, Stack } from '@mui/material';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import React from 'react';
 import VideoPlayer from './VideoPlayer';
+import ImageRender from './imageRender';
 
 interface Props {
   open: boolean;
@@ -11,7 +11,7 @@ interface Props {
   data: any;
 }
 
-export default function DisplayImage(props: Props) {
+export default function MediaContainer(props: Props) {
   const { open, handleClose, data } = props;
 
   // React state to store the index of the current image
@@ -50,17 +50,9 @@ export default function DisplayImage(props: Props) {
             <Container maxWidth='xl'>
               {
                 isImage ? (
-                  <Image
-                    quality={100}
-                    alt='Image Unavailable'
-                    src={data[index]} // Route of the image file
-                    width={1000} // Desired size with correct aspect ratio
-                    height={1000} // Desired size with correct aspect ratio
-                    style={{ objectFit: 'contain', maxInlineSize: '100%', blockSize: 'auto', maxHeight: '80vh' }}
-                    onError={handleNotImage}
-                  />
+                  <ImageRender url={data[index]} handleError={handleNotImage} />
                 ) : (
-                  <VideoPlayer videoUrl={data[index]} />
+                  <VideoPlayer url={data[index]} />
                 )
               }
             </Container>

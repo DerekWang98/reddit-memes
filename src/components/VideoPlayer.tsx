@@ -17,16 +17,16 @@ const Responsive = styled('div')(({ theme }) => ({
 }));
 
 interface Props {
-  videoUrl: string;
+  url: string;
 }
 
-export default function DisplayImage(props: Props) {
-  const { videoUrl } = props;
+export default function VideoPlayer(props: Props) {
+  const { url } = props;
 
   return (
     <Responsive>
       <ReactPlayer
-        url={videoUrl}
+        url={url}
         width='100%'
         height='100%'
         playing

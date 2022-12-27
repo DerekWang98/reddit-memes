@@ -5,14 +5,14 @@ import Box from '@mui/material/Box';
 import Link from '../src/Link';
 import ProTip from '../src/ProTip';
 import Copyright from '../src/Copyright';
-import DisplayImage from '../src/components/DisplayImage';
+import MediaContainer from '../src/components/MediaContainer';
 import { Button, CircularProgress, TextField } from '@mui/material';
 import { useRedditJSON } from '../src/redditAPI/content';
 
 export default function Home() {
 
   const [open, setOpen] = React.useState(false);
-  const [subreddit, setSubreddit] = React.useState('videos');
+  const [subreddit, setSubreddit] = React.useState('memes');
 
   const handleOpen = (event: any) => {
     event.stopPropagation(); // Stops the ClickAwayListener event from bubbling up the DOM tree, preventing any parent handlers from being notified of the event.
@@ -51,12 +51,12 @@ export default function Home() {
         <Link href="/about" color="secondary">
           Go to the about page
         </Link>
-        <TextField id="standard-basic" label="Subreddit" placeholder="E.g. ProgrammingHumor" variant="standard" onChange={handleSubredditChange} />
+        <TextField id="standard-basic" label="Subreddit" placeholder="E.g. ProgrammingHumor" variant="standard" onChange={handleSubredditChange} value={subreddit}/>
         {redditQuery.isLoading || !redditQuery.data ?
           <CircularProgress /> : (
             <>
               <Button variant="contained" onClick={handleOpen}>Open</Button>
-              <DisplayImage open={open} handleClose={handleClose} data={redditQuery.data} />
+              <MediaContainer open={open} handleClose={handleClose} data={redditQuery.data} />
             </>
           )
         }
