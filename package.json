@@ -2,6 +2,22 @@
   "name": "nextjs-with-typescript",
   "version": "5.0.0",
   "private": true,
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{ts,tsx}": []
+  },
+  "prettier": {
+    "trailingComma": "all"
+  },
+  "importSort": {
+    ".ts, .tsx": {
+      "style": "renke"
+    }
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -29,6 +45,9 @@
     "@types/react": "latest",
     "eslint": "latest",
     "eslint-config-next": "latest",
+    "husky": "^8.0.2",
+    "lint-staged": "^13.1.0",
+    "prettier": "^2.8.1",
     "typescript": "latest"
   }
 }
