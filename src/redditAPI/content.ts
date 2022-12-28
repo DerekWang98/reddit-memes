@@ -1,7 +1,6 @@
 import axios from "axios";
-import { useQuery } from "react-query";
 
-const getRedditJSON = async (subreddit: string): Promise<string[]> => {
+export const getRedditJSON = async (subreddit: string): Promise<string[]> => {
   const url = `https://www.reddit.com/r/${subreddit}.json`;
   const response = await axios.get(url);
 
@@ -9,16 +8,38 @@ const getRedditJSON = async (subreddit: string): Promise<string[]> => {
   const imageURLs = response.data.data.children
     .map(dehydrateRedditJSON)
     .filter(Boolean);
+
+  console.log("imageURLs", imageURLs);
   return imageURLs;
 };
 
 const dehydrateRedditJSON = (data: any) => {
   if (data.data.media) {
-    return data.data.media.reddit_video.fallback_url;
+    return data.data.media.reddit_video?.fallback_url;
   }
   return data.data.url_overridden_by_dest;
 };
 
-export const useRedditJSON = (subreddit: string) => {
-  return useQuery(["reddit", subreddit], () => getRedditJSON(subreddit));
+export const getRedditSubreddits = async (): Promise<string[]> => {
+  const url = `https://www.reddit.com/r/ListOfSubreddits/wiki/listofsubreddits.json`;
+  const response = await axios.get(url);
+
+  const subredditNames = filterSubredditNames(response.data.data.content_md);
+
+  return subredditNames;
+};
+
+const filterSubredditNames = (data: string): string[] => {
+  // Subreddit names are in the format of /r/subredditname
+  // This regex will return an array of subreddit names
+  // Remove the /r/ from the subreddit name and all duplicates
+  const regex = /\/r\/\w+/g;
+  const matches = data.match(regex);
+  if (matches) {
+    const subredditNames = matches
+      .map((subreddit) => subreddit.replace("/r/", ""))
+      .filter((subreddit, index, self) => self.indexOf(subreddit) === index);
+    return subredditNames;
+  }
+  return [];
 };
