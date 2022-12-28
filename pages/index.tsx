@@ -84,7 +84,11 @@ export default function Home() {
           <CircularProgress />
         ) : (
           <>
-            <Button variant="contained" onClick={handleOpen}>
+            <Button
+              variant="contained"
+              onClick={handleOpen}
+              disabled={!redditQuery.data.length}
+            >
               Open
             </Button>
             <MediaContainer
