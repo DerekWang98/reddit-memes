@@ -8,14 +8,23 @@
     }
   },
   "lint-staged": {
-    "*.{ts,tsx}": []
+    "**/*.+(js|jsx|css|less|scss|ts|tsx|md)": [
+      "npx import-sort-cli --write",
+      "npx prettier --write"
+    ],
+    "*.{json,md}": [
+      "prettier --write"
+    ],
+    "*.hbs": [
+      "prettier --write"
+    ]
   },
   "prettier": {
     "trailingComma": "all"
   },
   "importSort": {
-    ".ts, .tsx": {
-      "style": "renke"
+    ".js, .jsx, .es6, .es, .mjs, .ts, .tsx": {
+      "style": "eslint"
     }
   },
   "scripts": {
@@ -45,7 +54,8 @@
     "@types/react": "latest",
     "eslint": "latest",
     "eslint-config-next": "latest",
-    "husky": "^8.0.2",
+    "husky": "^4.3.8",
+    "import-sort-cli": "^6.0.0",
     "lint-staged": "^13.1.0",
     "prettier": "^2.8.1",
     "typescript": "latest"
