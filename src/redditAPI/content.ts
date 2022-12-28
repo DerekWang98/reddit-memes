@@ -13,16 +13,10 @@ const getRedditJSON = async (subreddit: string): Promise<string[]> => {
 const dehydrateRedditJSON = (data: any) => {
   if (data.data.media) {
     return data.data.media.reddit_video.fallback_url;
-  }
+  };
   return data.data.url_overridden_by_dest
-}
+};
 
 export const useRedditJSON = (subreddit: string) => {
   return useQuery(["reddit", subreddit], () => getRedditJSON(subreddit));
-}
-
-export const getImageURLfromRedditJSON = (data: any) => {
-  const imageURL = data?.data?.children[0]?.data?.url;
-  return imageURL;
 };
-
