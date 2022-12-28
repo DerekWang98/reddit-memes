@@ -4,11 +4,11 @@
   "private": true,
   "husky": {
     "hooks": {
-      "pre-commit": "tsc && lint-staged"
+      "pre-commit": "lint-staged"
     }
   },
   "lint-staged": {
-    "**/*.ts": "tsc-files --noEmit"
+    "*.{ts,tsx}": []
   },
   "prettier": {
     "trailingComma": "all"
