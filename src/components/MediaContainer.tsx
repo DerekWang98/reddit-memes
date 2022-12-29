@@ -1,9 +1,17 @@
-import { Backdrop, Box, ClickAwayListener, Container, IconButton, Stack } from '@mui/material';
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import React from 'react';
-import VideoPlayer from './VideoPlayer';
-import ImageRender from './ImageRender';
+import {
+  Backdrop,
+  Box,
+  ClickAwayListener,
+  Container,
+  IconButton,
+  Stack,
+} from "@mui/material";
+import React, { useCallback, useEffect } from "react";
+
+import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
+import ChevronRightIcon from "@mui/icons-material/ChevronRight";
+import ImageRender from "./ImageRender";
+import VideoPlayer from "./VideoPlayer";
 
 interface Props {
   open: boolean;
@@ -12,6 +20,27 @@ interface Props {
 }
 
 export default function MediaContainer(props: Props) {
+  // handle what happens on key press
+  const handleKeyPress = useCallback((event: any) => {
+    if (event.key === "ArrowRight") {
+      handleNext();
+    } else if (event.key === "ArrowLeft") {
+      handlePrevious();
+    } else if (event.key === "Escape") {
+      handleClose(event);
+    }
+  }, []);
+
+  useEffect(() => {
+    // attach the event listener
+    document.addEventListener("keydown", handleKeyPress);
+
+    // remove the event listener
+    return () => {
+      document.removeEventListener("keydown", handleKeyPress);
+    };
+  }, [handleKeyPress]);
+
   const { open, handleClose, data } = props;
 
   // React state to store the index of the current image
@@ -38,26 +67,28 @@ export default function MediaContainer(props: Props) {
 
   return (
     <Backdrop
-      sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+      sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
       open={open}
     >
       <ClickAwayListener onClickAway={handleClose}>
         <div role="presentation">
-          <Stack direction='row' spacing={2}>
-            <IconButton aria-label="previous" onClick={handlePrevious} size="large">
-              <ChevronLeftIcon fontSize='large' />
+          <Stack direction="row" spacing={2}>
+            <IconButton
+              aria-label="previous"
+              onClick={handlePrevious}
+              size="large"
+            >
+              <ChevronLeftIcon fontSize="large" />
             </IconButton>
-            <Container maxWidth='xl'>
-              {
-                isImage ? (
-                  <ImageRender url={data[index]} handleError={handleNotImage} />
-                ) : (
-                  <VideoPlayer url={data[index]} />
-                )
-              }
+            <Container maxWidth="xl">
+              {isImage ? (
+                <ImageRender url={data[index]} handleError={handleNotImage} />
+              ) : (
+                <VideoPlayer url={data[index]} />
+              )}
             </Container>
             <IconButton aria-label="next" onClick={handleNext} size="large">
-              <ChevronRightIcon fontSize='large' />
+              <ChevronRightIcon fontSize="large" />
             </IconButton>
           </Stack>
         </div>
