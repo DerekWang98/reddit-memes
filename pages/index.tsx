@@ -14,9 +14,7 @@ import {
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import Copyright from "../src/Copyright";
-import Link from "../src/Link";
 import MediaContainer from "../src/components/MediaContainer";
-import ProTip from "../src/ProTip";
 import Typography from "@mui/material/Typography";
 
 export default function Home() {
@@ -61,9 +59,6 @@ export default function Home() {
         <Typography variant="subtitle1" component="h1" gutterBottom>
           The easier way to consume reddit content.
         </Typography>
-        <Link href="/about" color="secondary">
-          Go to the about page
-        </Link>
         {subredditQuery.isLoading || !subredditQuery.data ? (
           <CircularProgress />
         ) : (
@@ -98,7 +93,6 @@ export default function Home() {
             />
           </>
         )}
-        <ProTip />
         <Copyright />
       </Box>
     </Container>
